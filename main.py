@@ -44,7 +44,7 @@ def carregar_icones():
                 screen.blit(ICON_X, (j * (COMPRIMENTO_JANELA // 3), i * (COMPRIMENTO_JANELA // 3)))
                 
 def tem_icones_iguais(icones, jogador_do_jogo):
-    for icone in enumerate(icones):
+    for icone in icones:
         if icone != jogador_do_jogo:
             return False
     return True
@@ -67,6 +67,12 @@ def e_vencedor(jogador_do_jogo):
     return tem_vencedor_linha(jogador_do_jogo)\
         or tem_vencedor_coluna(jogador_do_jogo)\
         or tem_vencedor_diagonal(jogador_do_jogo)
+        
+def verificador_vencedor(jogador_do_jogo):
+    if e_vencedor(jogador_do_jogo):
+        print(f"O JOGADOR_{jogador_do_jogo+1} é o vencedor")
+    elif e_vencedor(jogador_do_jogo):
+        print(f"O JOGADOR_{jogador_do_jogo+1} é o vencedor")
 
 while running:
     # poll for events
@@ -83,6 +89,7 @@ while running:
     screen.fill("white")
     screen.blit(grid, (0, 0))
     jogador = turno(jogador)
+    verificador_vencedor(jogador)
     carregar_icones()
     pygame.event.wait()
 
