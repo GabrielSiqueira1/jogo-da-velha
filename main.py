@@ -17,7 +17,9 @@ def carregar_img(path, resolution):
 grid = carregar_img('img/grid.png', [COMPRIMENTO_JANELA, COMPRIMENTO_JANELA])
 ICON_X = carregar_img('img/1.png', [COMPRIMENTO_JANELA//3 , COMPRIMENTO_JANELA//3])
 ICON_O = carregar_img('img/0.png', [COMPRIMENTO_JANELA//3, COMPRIMENTO_JANELA//3])
-jogador = 0
+JOGADOR_1 = 0
+JOGADOR_2 = 1
+jogador = JOGADOR_1
 tabuleiro = [
     [None, None, None],
     [None, None, None],
@@ -40,6 +42,31 @@ def carregar_icones():
                 screen.blit(ICON_O, (j * (COMPRIMENTO_JANELA // 3), i * (COMPRIMENTO_JANELA // 3)))
             if tabuleiro[i][j] == 1:
                 screen.blit(ICON_X, (j * (COMPRIMENTO_JANELA // 3), i * (COMPRIMENTO_JANELA // 3)))
+                
+def tem_icones_iguais(icones, jogador_do_jogo):
+    for icone in enumerate(icones):
+        if icone != jogador_do_jogo:
+            return False
+    return True
+
+def tem_vencedor_linha(jogador_do_jogo):
+    return tem_icones_iguais(tabuleiro[0], jogador_do_jogo)\
+        or tem_icones_iguais(tabuleiro[1], jogador_do_jogo)\
+        or tem_icones_iguais(tabuleiro[2], jogador_do_jogo)
+
+def tem_vencedor_coluna(jogador_do_jogo):
+    return tem_icones_iguais([tabuleiro[0][0], tabuleiro[1][0], tabuleiro[2][0]], jogador_do_jogo)\
+        or tem_icones_iguais([tabuleiro[0][1], tabuleiro[1][1], tabuleiro[2][1]], jogador_do_jogo)\
+        or tem_icones_iguais([tabuleiro[0][2], tabuleiro[1][2], tabuleiro[2][2]], jogador_do_jogo)
+        
+def tem_vencedor_diagonal(jogador_do_jogo):
+    return tem_icones_iguais([tabuleiro[0][0], tabuleiro[1][1], tabuleiro[2][2]], jogador_do_jogo)\
+        or tem_icones_iguais([tabuleiro[0][2], tabuleiro[1][1], tabuleiro[2][0]], jogador_do_jogo)
+                
+def e_vencedor(jogador_do_jogo):
+    return tem_vencedor_linha(jogador_do_jogo)\
+        or tem_vencedor_coluna(jogador_do_jogo)\
+        or tem_vencedor_diagonal(jogador_do_jogo)
 
 while running:
     # poll for events
